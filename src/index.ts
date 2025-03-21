@@ -80,6 +80,54 @@ export const createTools = (apiKey: string) => {
         return `Client ${clientId} deleted`;
       },
     }),
+    listDomains: tool({
+      description: 'List all domains for a provider',
+      parameters: z.object({ providerId: UgSchema.ProviderIdSchema }),
+      execute: async ({ providerId }, { abortSignal }) => {
+        return sdk(abortSignal).getDomains(providerId);
+      },
+    }),
+    addDomain: tool({
+      description: 'Add a new domain for a provider',
+      parameters: z.object({
+        providerId: UgSchema.ProviderIdSchema,
+        domain: UgSchema.AddDomainSchema.shape.domain,
+      }),
+      execute: async ({ providerId, domain }, { abortSignal }) => {
+        return sdk(abortSignal).addDomain(providerId, { domain });
+      },
+    }),
+    getDomain: tool({
+      description: 'Get a domain by provider and domain ID',
+      parameters: z.object({
+        providerId: UgSchema.ProviderIdSchema,
+        domainId: UgSchema.DomainIdSchema,
+      }),
+      execute: async ({ providerId, domainId }, { abortSignal }) => {
+        return sdk(abortSignal).getDomain(providerId, domainId);
+      },
+    }),
+    deleteDomain: tool({
+      description: 'Delete a domain by provider and domain ID',
+      parameters: z.object({
+        providerId: UgSchema.ProviderIdSchema,
+        domainId: UgSchema.DomainIdSchema,
+      }),
+      execute: async ({ providerId, domainId }, { abortSignal }) => {
+        await sdk(abortSignal).deleteDomain(providerId, domainId);
+        return `Domain ${domainId} deleted`;
+      },
+    }),
+    verifyDomain: tool({
+      description: 'Verify a domain by provider and domain ID',
+      parameters: z.object({
+        providerId: UgSchema.ProviderIdSchema,
+        domainId: UgSchema.DomainIdSchema,
+      }),
+      execute: async ({ providerId, domainId }, { abortSignal }) => {
+        return await sdk(abortSignal).verifyDomain(providerId, domainId);
+      },
+    }),
     createAccessToken: tool({
       description: 'Create a new access token for a client',
       parameters: z.object({

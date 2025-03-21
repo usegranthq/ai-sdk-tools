@@ -19,6 +19,11 @@ the source [src/index.ts](./src/index.ts) to copy the code and customize it for 
 - **createClient**: Create a new client for a provider
 - **getClient**: Get client details by provider and client ID
 - **deleteClient**: Delete a client from a provider
+- **listDomains**: List all domains for a provider
+- **addDomain**: Add a new domain for a provider
+- **getDomain**: Get a domain by provider and domain ID
+- **deleteDomain**: Delete a domain by provider and domain ID
+- **verifyDomain**: Verify a domain by provider and domain ID
 - **createAccessToken**: Create a new access token for a client
 - **listTenants**: List all tenants
 - **createTenant**: Create a new tenant
