@@ -31,16 +31,16 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@usegrant/sdk": "^1.5.1",
-    "ai": "^4.1.54",
+    "@usegrant/sdk": "^1.6.0",
+    "ai": "^4.2.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.13.11",
     "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
-    "oxlint": "^0.15.13",
+    "lint-staged": "^15.5.0",
+    "oxlint": "^0.16.2",
     "prettier": "^3.5.3",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
