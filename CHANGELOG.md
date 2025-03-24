@@ -1,5 +1,11 @@
 # @usegrant/ai-sdk-tools
 
+## 1.2.0
+
+### Minor Changes
+
+- 87dbdac: Add tools for tenant provider policy api's
+
 ## 1.1.0
 
 ### Minor Changes
