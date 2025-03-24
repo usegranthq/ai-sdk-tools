@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 87dbdac: Add tools for tenant provider policy api's
+- fe18401: Add tools for tenant provider policy api's
 
 ## 1.1.0
 
