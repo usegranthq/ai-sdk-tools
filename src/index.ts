@@ -17,7 +17,7 @@ export const createTools = (apiKey: string) => {
       description: 'List all providers',
       parameters: z.object({}),
       execute: async (_input, { abortSignal }) => {
-        return sdk(abortSignal).getProviders();
+        return sdk(abortSignal).listProviders();
       },
     }),
     createProvider: tool({
@@ -46,7 +46,7 @@ export const createTools = (apiKey: string) => {
       description: 'List all clients',
       parameters: z.object({ providerId: UgSchema.ProviderIdSchema }),
       execute: async ({ providerId }, { abortSignal }) => {
-        return sdk(abortSignal).getClients(providerId);
+        return sdk(abortSignal).listClients(providerId);
       },
     }),
     createClient: tool({
@@ -84,7 +84,7 @@ export const createTools = (apiKey: string) => {
       description: 'List all domains for a provider',
       parameters: z.object({ providerId: UgSchema.ProviderIdSchema }),
       execute: async ({ providerId }, { abortSignal }) => {
-        return sdk(abortSignal).getDomains(providerId);
+        return sdk(abortSignal).listDomains(providerId);
       },
     }),
     addDomain: tool({
@@ -143,7 +143,7 @@ export const createTools = (apiKey: string) => {
       description: 'List all tenants',
       parameters: z.object({}),
       execute: async (_input, { abortSignal }) => {
-        return sdk(abortSignal).getTenants();
+        return sdk(abortSignal).listTenants();
       },
     }),
     createTenant: tool({
@@ -172,7 +172,7 @@ export const createTools = (apiKey: string) => {
       description: 'List all providers for a tenant',
       parameters: z.object({ tenantId: UgSchema.TenantIdSchema }),
       execute: async ({ tenantId }, { abortSignal }) => {
-        return sdk(abortSignal).getTenantProviders(tenantId);
+        return sdk(abortSignal).listTenantProviders(tenantId);
       },
     }),
     createTenantProvider: tool({
@@ -206,14 +206,59 @@ export const createTools = (apiKey: string) => {
         return `Tenant provider ${providerId} deleted`;
       },
     }),
+    listTenantProviderPolicies: tool({
+      description: 'List all policies for a tenant provider',
+      parameters: z.object({
+        tenantId: UgSchema.TenantIdSchema,
+        providerId: UgSchema.TenantProviderIdSchema,
+      }),
+      execute: async ({ tenantId, providerId }, { abortSignal }) => {
+        return sdk(abortSignal).listTenantProviderPolicies(tenantId, providerId);
+      },
+    }),
+    createTenantProviderPolicy: tool({
+      description: 'Create a new policy for a tenant provider',
+      parameters: z.object({
+        tenantId: UgSchema.TenantIdSchema,
+        providerId: UgSchema.TenantProviderIdSchema,
+        ...UgSchema.CreateTenantProviderPolicySchema.shape,
+      }),
+      execute: async ({ tenantId, providerId, ...payload }, { abortSignal }) => {
+        return sdk(abortSignal).createTenantProviderPolicy(tenantId, providerId, payload);
+      },
+    }),
+    getTenantProviderPolicy: tool({
+      description: 'Get a policy for a tenant provider',
+      parameters: z.object({
+        tenantId: UgSchema.TenantIdSchema,
+        providerId: UgSchema.TenantProviderIdSchema,
+        policyId: UgSchema.TenantProviderPolicyIdSchema,
+      }),
+      execute: async ({ tenantId, providerId, policyId }, { abortSignal }) => {
+        return sdk(abortSignal).getTenantProviderPolicy(tenantId, providerId, policyId);
+      },
+    }),
+    deleteTenantProviderPolicy: tool({
+      description: 'Delete a policy for a tenant provider',
+      parameters: z.object({
+        tenantId: UgSchema.TenantIdSchema,
+        providerId: UgSchema.TenantProviderIdSchema,
+        policyId: UgSchema.TenantProviderPolicyIdSchema,
+      }),
+      execute: async ({ tenantId, providerId, policyId }, { abortSignal }) => {
+        await sdk(abortSignal).deleteTenantProviderPolicy(tenantId, providerId, policyId);
+        return `Tenant provider policy ${policyId} deleted`;
+      },
+    }),
     validateAccessToken: tool({
       description: 'Validate an access token',
       parameters: z.object({
         tenantId: UgSchema.TenantIdSchema,
+        policyId: UgSchema.TenantProviderPolicyIdSchema,
         accessToken: z.string(),
       }),
-      execute: async ({ tenantId, accessToken }, { abortSignal }) => {
-        const { exp } = await sdk(abortSignal).validateToken(tenantId, accessToken);
+      execute: async ({ tenantId, policyId, accessToken }, { abortSignal }) => {
+        const { exp } = await sdk(abortSignal).validateToken(tenantId, policyId, accessToken);
 
         return {
           isValid: true,
