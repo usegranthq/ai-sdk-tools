@@ -15,28 +15,28 @@ export const createTools = (apiKey: string) => {
   return {
     listProviders: tool({
       description: 'List all providers',
-      parameters: z.object({}),
+      inputSchema: z.object({}),
       execute: async (_input, { abortSignal }) => {
         return sdk(abortSignal).listProviders();
       },
     }),
     createProvider: tool({
       description: 'Create a new provider',
-      parameters: UgSchema.CreateProviderSchema,
+      inputSchema: UgSchema.CreateProviderSchema,
       execute: async (args, { abortSignal }) => {
         return sdk(abortSignal).createProvider(args);
       },
     }),
     getProvider: tool({
       description: 'Get a provider by ID',
-      parameters: z.object({ id: UgSchema.ProviderIdSchema }),
+      inputSchema: z.object({ id: UgSchema.ProviderIdSchema }),
       execute: async ({ id }, { abortSignal }) => {
         return sdk(abortSignal).getProvider(id);
       },
     }),
     deleteProvider: tool({
       description: 'Delete a provider',
-      parameters: z.object({ id: UgSchema.ProviderIdSchema }),
+      inputSchema: z.object({ id: UgSchema.ProviderIdSchema }),
       execute: async ({ id }, { abortSignal }) => {
         await sdk(abortSignal).deleteProvider(id);
         return `Provider ${id} deleted`;
@@ -44,14 +44,14 @@ export const createTools = (apiKey: string) => {
     }),
     listClients: tool({
       description: 'List all clients',
-      parameters: z.object({ providerId: UgSchema.ProviderIdSchema }),
+      inputSchema: z.object({ providerId: UgSchema.ProviderIdSchema }),
       execute: async ({ providerId }, { abortSignal }) => {
         return sdk(abortSignal).listClients(providerId);
       },
     }),
     createClient: tool({
       description: 'Create a new client for a provider',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         ...UgSchema.CreateClientSchema.shape,
       }),
@@ -61,7 +61,7 @@ export const createTools = (apiKey: string) => {
     }),
     getClient: tool({
       description: 'Get client details by provider and client ID',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         clientId: UgSchema.ClientIdSchema,
       }),
@@ -71,7 +71,7 @@ export const createTools = (apiKey: string) => {
     }),
     deleteClient: tool({
       description: 'Delete a client from a provider',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         clientId: UgSchema.ClientIdSchema,
       }),
@@ -82,14 +82,14 @@ export const createTools = (apiKey: string) => {
     }),
     listDomains: tool({
       description: 'List all domains for a provider',
-      parameters: z.object({ providerId: UgSchema.ProviderIdSchema }),
+      inputSchema: z.object({ providerId: UgSchema.ProviderIdSchema }),
       execute: async ({ providerId }, { abortSignal }) => {
         return sdk(abortSignal).listDomains(providerId);
       },
     }),
     addDomain: tool({
       description: 'Add a new domain for a provider',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         domain: UgSchema.AddDomainSchema.shape.domain,
       }),
@@ -99,7 +99,7 @@ export const createTools = (apiKey: string) => {
     }),
     getDomain: tool({
       description: 'Get a domain by provider and domain ID',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         domainId: UgSchema.DomainIdSchema,
       }),
@@ -109,7 +109,7 @@ export const createTools = (apiKey: string) => {
     }),
     deleteDomain: tool({
       description: 'Delete a domain by provider and domain ID',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         domainId: UgSchema.DomainIdSchema,
       }),
@@ -120,7 +120,7 @@ export const createTools = (apiKey: string) => {
     }),
     verifyDomain: tool({
       description: 'Verify a domain by provider and domain ID',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         domainId: UgSchema.DomainIdSchema,
       }),
@@ -130,7 +130,7 @@ export const createTools = (apiKey: string) => {
     }),
     createAccessToken: tool({
       description: 'Create a new access token for a client',
-      parameters: z.object({
+      inputSchema: z.object({
         providerId: UgSchema.ProviderIdSchema,
         clientId: UgSchema.ClientIdSchema,
         ...UgSchema.CreateTokenSchema.shape,
@@ -141,28 +141,28 @@ export const createTools = (apiKey: string) => {
     }),
     listTenants: tool({
       description: 'List all tenants',
-      parameters: z.object({}),
+      inputSchema: z.object({}),
       execute: async (_input, { abortSignal }) => {
         return sdk(abortSignal).listTenants();
       },
     }),
     createTenant: tool({
       description: 'Create a new tenant',
-      parameters: UgSchema.CreateTenantSchema,
+      inputSchema: UgSchema.CreateTenantSchema,
       execute: async (payload, { abortSignal }) => {
         return sdk(abortSignal).createTenant(payload);
       },
     }),
     getTenant: tool({
       description: 'Get a tenant by ID',
-      parameters: z.object({ id: UgSchema.TenantIdSchema }),
+      inputSchema: z.object({ id: UgSchema.TenantIdSchema }),
       execute: async ({ id }, { abortSignal }) => {
         return sdk(abortSignal).getTenant(id);
       },
     }),
     deleteTenant: tool({
       description: 'Delete a tenant',
-      parameters: z.object({ id: UgSchema.TenantIdSchema }),
+      inputSchema: z.object({ id: UgSchema.TenantIdSchema }),
       execute: async ({ id }, { abortSignal }) => {
         await sdk(abortSignal).deleteTenant(id);
         return `Tenant ${id} deleted`;
@@ -170,14 +170,14 @@ export const createTools = (apiKey: string) => {
     }),
     listTenantProviders: tool({
       description: 'List all providers for a tenant',
-      parameters: z.object({ tenantId: UgSchema.TenantIdSchema }),
+      inputSchema: z.object({ tenantId: UgSchema.TenantIdSchema }),
       execute: async ({ tenantId }, { abortSignal }) => {
         return sdk(abortSignal).listTenantProviders(tenantId);
       },
     }),
     createTenantProvider: tool({
       description: 'Create a new provider for a tenant',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         ...UgSchema.CreateTenantProviderSchema.shape,
       }),
@@ -187,7 +187,7 @@ export const createTools = (apiKey: string) => {
     }),
     getTenantProvider: tool({
       description: 'Get a provider for a tenant',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         providerId: UgSchema.TenantProviderIdSchema,
       }),
@@ -197,7 +197,7 @@ export const createTools = (apiKey: string) => {
     }),
     deleteTenantProvider: tool({
       description: 'Delete a provider for a tenant',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         providerId: UgSchema.TenantProviderIdSchema,
       }),
@@ -208,7 +208,7 @@ export const createTools = (apiKey: string) => {
     }),
     listTenantProviderPolicies: tool({
       description: 'List all policies for a tenant provider',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         providerId: UgSchema.TenantProviderIdSchema,
       }),
@@ -218,7 +218,7 @@ export const createTools = (apiKey: string) => {
     }),
     createTenantProviderPolicy: tool({
       description: 'Create a new policy for a tenant provider',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         providerId: UgSchema.TenantProviderIdSchema,
         ...UgSchema.CreateTenantProviderPolicySchema.shape,
@@ -229,7 +229,7 @@ export const createTools = (apiKey: string) => {
     }),
     getTenantProviderPolicy: tool({
       description: 'Get a policy for a tenant provider',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         providerId: UgSchema.TenantProviderIdSchema,
         policyId: UgSchema.TenantProviderPolicyIdSchema,
@@ -240,7 +240,7 @@ export const createTools = (apiKey: string) => {
     }),
     deleteTenantProviderPolicy: tool({
       description: 'Delete a policy for a tenant provider',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         providerId: UgSchema.TenantProviderIdSchema,
         policyId: UgSchema.TenantProviderPolicyIdSchema,
@@ -252,7 +252,7 @@ export const createTools = (apiKey: string) => {
     }),
     validateAccessToken: tool({
       description: 'Validate an access token',
-      parameters: z.object({
+      inputSchema: z.object({
         tenantId: UgSchema.TenantIdSchema,
         policyId: UgSchema.TenantProviderPolicyIdSchema,
         accessToken: z.string(),
