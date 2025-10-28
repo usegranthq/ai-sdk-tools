@@ -1,5 +1,5 @@
 import { tool } from 'ai';
-import z from 'zod';
+import z from 'zod/v4';
 import UseGrant from '@usegrant/sdk';
 import * as UgSchema from '@usegrant/sdk/schema';
 
