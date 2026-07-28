@@ -31,18 +31,18 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@usegrant/sdk": "^2.0.0",
+    "@usegrant/sdk": "^2.1.0",
     "ai": "^7.0.40",
-    "zod": "^3.25.76"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
-    "@types/node": "^22.18.12",
+    "@changesets/cli": "^2.31.1",
+    "@types/node": "^26.1.2",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
-    "oxlint": "^1.24.0",
-    "prettier": "^3.6.2",
-    "tsdown": "^0.15.11",
-    "typescript": "^5.9.3"
+    "lint-staged": "^17.2.0",
+    "oxlint": "^1.76.0",
+    "prettier": "^3.9.6",
+    "tsdown": "^0.22.14",
+    "typescript": "^7.0.2"
   }
 }
