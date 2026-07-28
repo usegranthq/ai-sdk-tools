@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@usegrant/sdk": "^2.0.0",
-    "ai": "^5.0.81",
+    "ai": "^7.0.40",
     "zod": "^3.25.76"
   },
   "devDependencies": {
