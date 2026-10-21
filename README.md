@@ -3,7 +3,7 @@
 This is a set of [tools](https://ai-sdk.dev/docs/foundations/tools) for interacting with the UseGrant API using the [Vercel AI SDK](https://ai-sdk.dev/).
 
 The tools are exported for convenience to interact with UseGrant from any AI SDK application. You can refer to
-the source [src/index.ts](./src/index.ts) to copy the code and customize it for your needs.
+the source [src/generated/tools.gen.ts](./src/generated/tools.gen.ts) to copy the code and customize it for your needs.
 
 ## Requirements
 
@@ -11,33 +11,18 @@ the source [src/index.ts](./src/index.ts) to copy the code and customize it for 
 
 ## Tools
 
-- **listProviders**: List all providers
-- **createProvider**: Create a new provider
-- **getProvider**: Get a provider by ID
-- **deleteProvider**: Delete a provider
-- **listClients**: List all clients for a provider
-- **createClient**: Create a new client for a provider
-- **getClient**: Get client details by provider and client ID
-- **deleteClient**: Delete a client from a provider
-- **listDomains**: List all domains for a provider
-- **addDomain**: Add a new domain for a provider
-- **getDomain**: Get a domain by provider and domain ID
-- **deleteDomain**: Delete a domain by provider and domain ID
-- **verifyDomain**: Verify a domain by provider and domain ID
-- **createAccessToken**: Create a new access token for a client
-- **listTenants**: List all tenants
-- **createTenant**: Create a new tenant
-- **getTenant**: Get a tenant by ID
-- **deleteTenant**: Delete a tenant
-- **listTenantProviders**: List all providers for a tenant
-- **createTenantProvider**: Create a new provider for a tenant
-- **getTenantProvider**: Get a provider for a tenant
-- **deleteTenantProvider**: Delete a provider for a tenant
-- **listTenantProviderPolicies**: List all policies for a tenant provider
-- **createTenantProviderPolicy**: Create a new policy for a tenant provider
-- **getTenantProviderPolicy**: Get a policy for a tenant provider
-- **deleteTenantProviderPolicy**: Delete a policy for a tenant provider
-- **validateAccessToken**: Validate an access token against a tenant provider policy
+The tools are generated from the [UseGrant OpenAPI spec](https://sdk.usegrant.dev/open-api.json) and call the
+[UseGrant SDK](https://github.com/usegranthq/sdk), so every API operation is available as a tool. Tools are named after the
+operation, for example:
+
+- **providers_list**: List Providers
+- **providers_clients_create**: Create Client
+- **providers_domains_verify**: Verify Domain
+- **tenants_providers_policies_create**: Create Tenant Provider Policy
+- **tenants_tokens_validate**: Validate Token
+
+Refer to [src/generated/tools.gen.ts](./src/generated/tools.gen.ts) for the full list. API errors are thrown as `UseGrantError`
+from `@usegrant/sdk`, which the AI SDK reports to the model as a tool error.
 
 ## Using with AI SDK
 
@@ -59,6 +44,11 @@ const { text } = await generateText({
   stopWhen: isStepCount(5),
 });
 ```
+
+## Contributing
+
+The tools in `src/generated` are generated from the OpenAPI spec. After updating `@usegrant/sdk`, run `npm run generate`
+to regenerate them, do not edit the generated files by hand.
 
 ## License
 
